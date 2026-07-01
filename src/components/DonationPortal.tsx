@@ -205,6 +205,15 @@ export default function DonationPortal() {
                 <span className="text-[10px] font-sans font-bold text-stone-500 uppercase flex items-center gap-1">
                   <QrCode className="w-3.5 h-3.5 text-amber-800" /> Quét mã VietQR
                 </span>
+                <a
+                  id="btn-qr-click"
+                  href="https://link.vietqr.io/pay/cake/42328502?addInfo=Dong%20Gop%20Quy%20C8"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1 w-full bg-stone-100 hover:bg-stone-200 text-stone-700 font-sans font-bold text-[10px] py-1.5 px-2 rounded-lg text-center flex items-center justify-center gap-1 transition border border-stone-200/60"
+                >
+                  <QrCode className="w-3 h-3" /> Click Chuyển Khoản
+                </a>
               </div>
 
               {/* Bank Details Text */}
@@ -228,6 +237,19 @@ export default function DonationPortal() {
 
                   <p className="text-stone-600"><strong>Chủ tài khoản:</strong> {bankDetails.accountName}</p>
                   <p className="text-stone-600"><strong>Cú pháp chuyển khoản:</strong> <span className="bg-amber-850/5 text-amber-900 font-mono font-bold px-1.5 py-0.5 rounded border border-amber-800/15">{bankDetails.syntax}</span></p>
+                </div>
+
+                <div className="pt-2">
+                  <a
+                    id="btn-direct-transfer"
+                    href="https://link.vietqr.io/pay/cake/42328502?addInfo=Dong%20Gop%20Quy%20C8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-amber-800 hover:bg-amber-900 text-white font-sans font-bold text-xs uppercase py-2.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer border border-amber-700/20 text-center"
+                  >
+                    <QrCode className="w-4 h-4" />
+                    Chuyển Khoản Nhanh qua App Ngân Hàng
+                  </a>
                 </div>
 
                 <div className="flex items-center gap-2 text-stone-500 text-[10px] bg-amber-800/5 p-2 rounded-lg border border-amber-800/10">
