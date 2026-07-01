@@ -1,0 +1,6 @@
+{
+  "name": "Kỷ niệm 15 năm ra trường 2008-2011",
+  "description": "Trang thông tin kỷ niệm 15 năm ra trường niên khóa 2008-2011 - Nơi lưu giữ ký ức, đăng ký tham gia họp lớp và chung tay xây dựng quỹ lớp.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
