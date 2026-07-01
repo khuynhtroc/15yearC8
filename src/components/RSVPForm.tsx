@@ -38,6 +38,7 @@ export default function RSVPForm() {
   const [customSheetId, setCustomSheetId] = useState('');
   const [isConnectingCustom, setIsConnectingCustom] = useState(false);
   const [isCreatingSheet, setIsCreatingSheet] = useState(false);
+  const [showGoogleConfig, setShowGoogleConfig] = useState(false);
   
   // Sync Status States
   const [isSyncing, setIsSyncing] = useState(false);
@@ -1135,197 +1136,211 @@ export default function RSVPForm() {
                   className="space-y-6"
                 >
                   
-                  {/* Google OAuth & Connection Bento Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    
-                    {/* Block A: Authentication Status */}
-                    <div className="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm space-y-4 font-sans">
-                      <div className="flex items-center justify-between border-b border-stone-100 pb-3">
-                        <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
-                          <Lock className="w-4 h-4 text-amber-800" /> Tài Khoản Google Tài Trợ
-                        </h4>
-                        {googleUser ? (
-                          <span className="bg-emerald-50 text-emerald-700 text-[10px] px-2 py-0.5 rounded-full font-bold border border-emerald-200 flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> Đã kết nối
-                          </span>
-                        ) : (
-                          <span className="bg-stone-100 text-stone-500 text-[10px] px-2 py-0.5 rounded-full font-semibold">
-                            Chưa đăng nhập
-                          </span>
-                        )}
-                      </div>
+                  {/* Subtle Toggle for Google Sheets Connection Config */}
+                  <div className="flex justify-end pr-1">
+                    <button
+                      type="button"
+                      onClick={() => setShowGoogleConfig(!showGoogleConfig)}
+                      className="text-[11px] font-sans text-stone-400 hover:text-amber-800 transition flex items-center gap-1.5 cursor-pointer hover:underline bg-transparent border-none"
+                    >
+                      <Lock className="w-3 h-3" />
+                      {showGoogleConfig ? 'Ẩn cấu hình kết nối Google Sheet' : 'Hiển thị cấu hình kết nối Google Sheet'}
+                    </button>
+                  </div>
 
-                      {googleUser ? (
-                        <div className="flex items-center justify-between gap-4">
-                          <div className="flex items-center gap-3">
-                            {googleUser.photoURL ? (
-                              <img src={googleUser.photoURL} alt="Google Avatar" className="w-10 h-10 rounded-full border border-stone-200" referrerpolicy="no-referrer" />
-                            ) : (
-                              <div className="w-10 h-10 rounded-full bg-amber-800 text-white font-bold flex items-center justify-center text-sm uppercase">
-                                {googleUser.displayName?.charAt(0) || 'G'}
-                              </div>
-                            )}
-                            <div>
-                              <p className="font-bold text-xs text-stone-800 leading-tight">{googleUser.displayName}</p>
-                              <p className="text-[10px] text-stone-500 mt-0.5 leading-none">{googleUser.email}</p>
-                            </div>
-                          </div>
-                          
-                          <button
-                            onClick={handleGoogleLogout}
-                            className="text-stone-400 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition"
-                            title="Đăng xuất tài khoản Google"
-                          >
-                            <LogOut className="w-4 h-4" />
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="space-y-3 py-1">
-                          <p className="text-stone-600 text-[11px] leading-relaxed">
-                            Hãy liên kết trực tiếp tài khoản Google của Ban Liên Lạc lớp để quản trị, tạo tệp, và kích hoạt tính năng đồng bộ hóa 1-Click tự động vào Google Sheets thật.
-                          </p>
-                          <button
-                            onClick={handleGoogleSignIn}
-                            disabled={isLoggingIn}
-                            className="w-full bg-white hover:bg-stone-50 text-stone-700 border border-stone-300 font-bold text-xs py-3 rounded-xl shadow-sm transition flex items-center justify-center gap-2 cursor-pointer"
-                          >
-                            {isLoggingIn ? (
-                              <>
-                                <RefreshCw className="w-4 h-4 animate-spin" />
-                                Đang mở cửa sổ Google OAuth...
-                              </>
-                            ) : (
-                              <>
-                                <svg className="w-4 h-4" viewBox="0 0 24 24">
-                                  <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.578-7.859-8s3.53-8 7.859-8c2.46 0 4.105 1.025 5.047 1.926l3.245-3.125C18.29 1.97 15.42.79 12.24.79 6.006.79.95 5.845.95 12.08s5.056 11.29 11.29 11.29c6.51 0 10.835-4.58 10.835-11.05 0-.745-.08-1.32-.175-2.035z"/>
-                                </svg>
-                                Kết nối Google Account
-                              </>
-                            )}
-                          </button>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Block B: Connected Spreadsheet details */}
-                    <div className="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm space-y-4 font-sans">
-                      <div className="flex items-center justify-between border-b border-stone-100 pb-3">
-                        <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
-                          <Link2 className="w-4 h-4 text-amber-800" /> Tệp Google Sheet Đồng Bộ
-                        </h4>
-                        {connectedSpreadsheet ? (
-                          <span className="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded-full font-bold border border-amber-250">
-                            Đã liên kết
-                          </span>
-                        ) : (
-                          <span className="bg-stone-100 text-stone-500 text-[10px] px-2 py-0.5 rounded-full font-semibold">
-                            Chưa cấu hình
-                          </span>
-                        )}
-                      </div>
-
-                      {connectedSpreadsheet ? (
-                        <div className="space-y-3">
-                          <div className="bg-stone-50 p-3 rounded-xl border border-stone-200 flex items-start justify-between gap-3">
-                            <div className="space-y-1 overflow-hidden">
-                              <p className="font-bold text-xs text-stone-800 truncate" title={connectedSpreadsheet.name}>
-                                {connectedSpreadsheet.name}
-                              </p>
-                              <p className="font-mono text-[9px] text-stone-400 truncate">ID: {connectedSpreadsheet.id}</p>
-                            </div>
-                            <div className="flex gap-1">
-                              <a
-                                href={connectedSpreadsheet.url}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-amber-800 hover:bg-amber-50 p-1.5 rounded-lg transition"
-                                title="Mở trong Google Sheets mới"
-                              >
-                                <ExternalLink className="w-3.5 h-3.5" />
-                              </a>
-                            </div>
-                          </div>
-                          
-                          <button
-                            onClick={disconnectSpreadsheet}
-                            className="w-full bg-stone-100 hover:bg-red-50 hover:text-red-700 text-stone-600 font-bold text-[10px] py-2 rounded-lg transition border-none cursor-pointer"
-                          >
-                            Hủy liên kết tệp
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="space-y-3">
+                  {showGoogleConfig && (
+                    /* Google OAuth & Connection Bento Grid */
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      
+                      {/* Block A: Authentication Status */}
+                      <div className="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm space-y-4 font-sans">
+                        <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+                          <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
+                            <Lock className="w-4 h-4 text-amber-800" /> Tài Khoản Google Tài Trợ
+                          </h4>
                           {googleUser ? (
-                            <div className="space-y-2">
-                              {/* Search & dropdown option */}
-                              {spreadsheets.length > 0 ? (
-                                <div className="space-y-2">
-                                  <label className="block text-[10px] font-bold text-stone-500 uppercase tracking-wide">Tìm thấy tệp phù hợp trong Drive:</label>
-                                  <div className="max-h-[100px] overflow-y-auto border border-stone-200 rounded-xl divide-y divide-stone-100 text-xs bg-stone-50/50">
-                                    {spreadsheets.map((sheet) => (
-                                      <div key={sheet.id} className="p-2.5 flex items-center justify-between hover:bg-white gap-3">
-                                        <span className="font-medium text-stone-700 truncate block text-[11px]">{sheet.name}</span>
-                                        <button
-                                          onClick={() => connectSpreadsheetFile(sheet)}
-                                          className="bg-amber-800 text-white font-bold text-[9px] px-2.5 py-1 rounded-md transition cursor-pointer border-none"
-                                        >
-                                          Chọn
-                                        </button>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              ) : (
-                                <p className="text-[10px] text-stone-500 italic">Không tìm thấy tệp "Hàm Rồng" nào sẵn có trong Drive của bạn.</p>
-                              )}
-
-                              <div className="flex flex-wrap gap-2 pt-1">
-                                <button
-                                  onClick={handleCreateNewSpreadsheet}
-                                  disabled={isCreatingSheet}
-                                  className="flex-1 bg-amber-800 hover:bg-amber-900 disabled:bg-stone-300 text-white font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 border-none cursor-pointer"
-                                >
-                                  {isCreatingSheet ? (
-                                    <>
-                                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                                      Đang tạo trang...
-                                    </>
-                                  ) : (
-                                    <>
-                                      <Plus className="w-3.5 h-3.5" />
-                                      Tạo tệp Google Sheet Mới tự động
-                                    </>
-                                  )}
-                                </button>
-                              </div>
-                              
-                              {/* Manual form */}
-                              <form onSubmit={handleConnectCustomSheet} className="flex gap-1.5 pt-2 border-t border-stone-100">
-                                <input
-                                  type="text"
-                                  placeholder="Nhập ID tệp Google Sheet thủ công..."
-                                  value={customSheetId}
-                                  onChange={(e) => setCustomSheetId(e.target.value)}
-                                  className="flex-1 min-w-0 px-3 py-1.5 rounded-lg border border-stone-300 focus:outline-none focus:border-amber-800 text-[11px] bg-stone-50"
-                                />
-                                <button
-                                  type="submit"
-                                  disabled={isConnectingCustom}
-                                  className="bg-stone-200 hover:bg-stone-300 text-stone-700 font-bold text-[10px] px-3 py-1.5 rounded-lg transition border-none cursor-pointer"
-                                >
-                                  {isConnectingCustom ? '...' : 'Liên kết'}
-                                </button>
-                              </form>
-                            </div>
+                            <span className="bg-emerald-50 text-emerald-700 text-[10px] px-2 py-0.5 rounded-full font-bold border border-emerald-200 flex items-center gap-1">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> Đã kết nối
+                            </span>
                           ) : (
-                            <p className="text-[11px] text-stone-400 italic leading-relaxed py-1">
-                              Hãy đăng nhập tài khoản Google ở thẻ bên cạnh để mở khóa bảng chọn liên kết Drive tệp của bạn hoặc tạo trang tính cấu trúc lớp tự động.
-                            </p>
+                            <span className="bg-stone-100 text-stone-500 text-[10px] px-2 py-0.5 rounded-full font-semibold">
+                              Chưa đăng nhập
+                            </span>
                           )}
                         </div>
-                      )}
+
+                        {googleUser ? (
+                          <div className="flex items-center justify-between gap-4">
+                            <div className="flex items-center gap-3">
+                              {googleUser.photoURL ? (
+                                <img src={googleUser.photoURL} alt="Google Avatar" className="w-10 h-10 rounded-full border border-stone-200" referrerpolicy="no-referrer" />
+                              ) : (
+                                <div className="w-10 h-10 rounded-full bg-amber-800 text-white font-bold flex items-center justify-center text-sm uppercase">
+                                  {googleUser.displayName?.charAt(0) || 'G'}
+                                </div>
+                              )}
+                              <div>
+                                <p className="font-bold text-xs text-stone-800 leading-tight">{googleUser.displayName}</p>
+                                <p className="text-[10px] text-stone-500 mt-0.5 leading-none">{googleUser.email}</p>
+                              </div>
+                            </div>
+                            
+                            <button
+                              onClick={handleGoogleLogout}
+                              className="text-stone-400 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition"
+                              title="Đăng xuất tài khoản Google"
+                            >
+                              <LogOut className="w-4 h-4" />
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="space-y-3 py-1">
+                            <p className="text-stone-600 text-[11px] leading-relaxed">
+                              Hãy liên kết trực tiếp tài khoản Google của Ban Liên Lạc lớp để quản trị, tạo tệp, và kích hoạt tính năng đồng bộ hóa 1-Click tự động vào Google Sheets thật.
+                            </p>
+                            <button
+                              onClick={handleGoogleSignIn}
+                              disabled={isLoggingIn}
+                              className="w-full bg-white hover:bg-stone-50 text-stone-700 border border-stone-300 font-bold text-xs py-3 rounded-xl shadow-sm transition flex items-center justify-center gap-2 cursor-pointer"
+                            >
+                              {isLoggingIn ? (
+                                <>
+                                  <RefreshCw className="w-4 h-4 animate-spin" />
+                                  Đang mở cửa sổ Google OAuth...
+                                </>
+                              ) : (
+                                <>
+                                  <svg className="w-4 h-4" viewBox="0 0 24 24">
+                                    <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.578-7.859-8s3.53-8 7.859-8c2.46 0 4.105 1.025 5.047 1.926l3.245-3.125C18.29 1.97 15.42.79 12.24.79 6.006.79.95 5.845.95 12.08s5.056 11.29 11.29 11.29c6.51 0 10.835-4.58 10.835-11.05 0-.745-.08-1.32-.175-2.035z"/>
+                                  </svg>
+                                  Kết nối Google Account
+                                </>
+                              )}
+                            </button>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Block B: Connected Spreadsheet details */}
+                      <div className="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm space-y-4 font-sans">
+                        <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+                          <h4 className="text-sm font-bold text-stone-900 flex items-center gap-2">
+                            <Link2 className="w-4 h-4 text-amber-800" /> Tệp Google Sheet Đồng Bộ
+                          </h4>
+                          {connectedSpreadsheet ? (
+                            <span className="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded-full font-bold border border-amber-250">
+                              Đã liên kết
+                            </span>
+                          ) : (
+                            <span className="bg-stone-100 text-stone-500 text-[10px] px-2 py-0.5 rounded-full font-semibold">
+                              Chưa cấu hình
+                            </span>
+                          )}
+                        </div>
+
+                        {connectedSpreadsheet ? (
+                          <div className="space-y-3">
+                            <div className="bg-stone-50 p-3 rounded-xl border border-stone-200 flex items-start justify-between gap-3">
+                              <div className="space-y-1 overflow-hidden">
+                                <p className="font-bold text-xs text-stone-800 truncate" title={connectedSpreadsheet.name}>
+                                  {connectedSpreadsheet.name}
+                                </p>
+                                <p className="font-mono text-[9px] text-stone-400 truncate">ID: {connectedSpreadsheet.id}</p>
+                              </div>
+                              <div className="flex gap-1">
+                                <a
+                                  href={connectedSpreadsheet.url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="text-amber-800 hover:bg-amber-50 p-1.5 rounded-lg transition"
+                                  title="Mở trong Google Sheets mới"
+                                >
+                                  <ExternalLink className="w-3.5 h-3.5" />
+                                </a>
+                              </div>
+                            </div>
+                            
+                            <button
+                              onClick={disconnectSpreadsheet}
+                              className="w-full bg-stone-100 hover:bg-red-50 hover:text-red-700 text-stone-600 font-bold text-[10px] py-2 rounded-lg transition border-none cursor-pointer"
+                            >
+                              Hủy liên kết tệp
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="space-y-3">
+                            {googleUser ? (
+                              <div className="space-y-2">
+                                {/* Search & dropdown option */}
+                                {spreadsheets.length > 0 ? (
+                                  <div className="space-y-2">
+                                    <label className="block text-[10px] font-bold text-stone-500 uppercase tracking-wide">Tìm thấy tệp phù hợp trong Drive:</label>
+                                    <div className="max-h-[100px] overflow-y-auto border border-stone-200 rounded-xl divide-y divide-stone-100 text-xs bg-stone-50/50">
+                                      {spreadsheets.map((sheet) => (
+                                        <div key={sheet.id} className="p-2.5 flex items-center justify-between hover:bg-white gap-3">
+                                          <span className="font-medium text-stone-700 truncate block text-[11px]">{sheet.name}</span>
+                                          <button
+                                            onClick={() => connectSpreadsheetFile(sheet)}
+                                            className="bg-amber-800 text-white font-bold text-[9px] px-2.5 py-1 rounded-md transition cursor-pointer border-none"
+                                          >
+                                            Chọn
+                                          </button>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <p className="text-[10px] text-stone-500 italic">Không tìm thấy tệp "Hàm Rồng" nào sẵn có trong Drive của bạn.</p>
+                                )}
+
+                                <div className="flex flex-wrap gap-2 pt-1">
+                                  <button
+                                    onClick={handleCreateNewSpreadsheet}
+                                    disabled={isCreatingSheet}
+                                    className="flex-1 bg-amber-800 hover:bg-amber-900 disabled:bg-stone-300 text-white font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 border-none cursor-pointer"
+                                  >
+                                    {isCreatingSheet ? (
+                                      <>
+                                        <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                                        Đang tạo trang...
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Plus className="w-3.5 h-3.5" />
+                                        Tạo tệp Google Sheet Mới tự động
+                                      </>
+                                    )}
+                                  </button>
+                                </div>
+                                
+                                {/* Manual form */}
+                                <form onSubmit={handleConnectCustomSheet} className="flex gap-1.5 pt-2 border-t border-stone-100">
+                                  <input
+                                    type="text"
+                                    placeholder="Nhập ID tệp Google Sheet thủ công..."
+                                    value={customSheetId}
+                                    onChange={(e) => setCustomSheetId(e.target.value)}
+                                    className="flex-1 min-w-0 px-3 py-1.5 rounded-lg border border-stone-300 focus:outline-none focus:border-amber-800 text-[11px] bg-stone-50"
+                                  />
+                                  <button
+                                    type="submit"
+                                    disabled={isConnectingCustom}
+                                    className="bg-stone-200 hover:bg-stone-300 text-stone-700 font-bold text-[10px] px-3 py-1.5 rounded-lg transition border-none cursor-pointer"
+                                  >
+                                    {isConnectingCustom ? '...' : 'Liên kết'}
+                                  </button>
+                                </form>
+                              </div>
+                            ) : (
+                              <p className="text-[11px] text-stone-400 italic leading-relaxed py-1">
+                                Hãy đăng nhập tài khoản Google ở thẻ bên cạnh để mở khóa bảng chọn liên kết Drive tệp của bạn hoặc tạo trang tính cấu trúc lớp tự động.
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* 1-Click Sync Status Section */}
                   {connectedSpreadsheet && accessToken && (
