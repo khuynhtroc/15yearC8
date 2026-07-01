@@ -8,7 +8,7 @@ interface HeroProps {
 }
 
 export default function Hero({ onRSVPClick, onDonationClick }: HeroProps) {
-  const targetDate = new Date('2026-07-18T08:00:00').getTime();
+  const targetDate = new Date('2026-07-18T13:00:00').getTime();
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -137,14 +137,14 @@ export default function Hero({ onRSVPClick, onDonationClick }: HeroProps) {
             <Calendar className="w-5 h-5 text-amber-800 flex-shrink-0 mt-0.5" />
             <div>
               <p className="font-semibold text-stone-800 text-sm">Thời gian</p>
-              <p className="text-stone-600 text-xs">08:00 • Thứ Bảy, 18/07/2026</p>
+              <p className="text-stone-600 text-xs">13h00-22h00 • Thứ Bảy, 18/07/2026</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-stone-50/50 p-4 rounded-xl border border-stone-200">
             <MapPin className="w-5 h-5 text-amber-800 flex-shrink-0 mt-0.5" />
             <div>
               <p className="font-semibold text-stone-800 text-sm">Địa điểm</p>
-              <p className="text-stone-600 text-xs">Trường THPT Hàm Rồng & Trung tâm Hội nghị Gala</p>
+              <p className="text-stone-600 text-xs">Trường THPT Hàm Rồng & Nhà hàng Đại Việt Palace</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-stone-50/50 p-4 rounded-xl border border-stone-200">

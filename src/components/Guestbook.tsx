@@ -102,7 +102,7 @@ export default function Guestbook() {
             Lưu giữ nét chữ năm xưa
           </span>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-stone-900">
-            Trang Lưu Bút Học Trò K08-11
+            Trang Lưu Bút Học Trò 10A8-11B8-12C8
           </h2>
           <p className="font-sans text-stone-600 text-sm max-w-xl mx-auto leading-relaxed">
             Nơi gửi gắm những lời chúc chân tình, những lời xin lỗi hay cảm ơn muộn màng, và những ký ức ngọt ngào từ thời học sinh tinh nghịch. Hãy viết vài dòng để cùng nhau ôn lại nhé!
@@ -259,7 +259,7 @@ export default function Guestbook() {
                         </div>
                         <div className="min-w-0">
                           <p className="font-bold text-stone-800 text-[11px] truncate">{post.name}</p>
-                          <p className="text-[9px] text-stone-400 font-medium">Khóa K08-11 • Lớp: {post.classGroup}</p>
+                          <p className="text-[9px] text-stone-400 font-medium">Khóa 10A8-11B8-12C8 • Lớp: {post.classGroup}</p>
                         </div>
                       </div>
                     </motion.div>

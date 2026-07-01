@@ -310,7 +310,7 @@ export default function DonationPortal() {
                       <input
                         id="input-donation-amount"
                         type="text"
-                        placeholder="Ví dụ: 500,000"
+                        placeholder="Ví dụ: 1,000,000"
                         value={amount}
                         onChange={(e) => {
                           // Clean non-numeric except commas

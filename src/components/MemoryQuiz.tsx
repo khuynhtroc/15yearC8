@@ -39,7 +39,7 @@ export default function MemoryQuiz() {
   };
 
   const getRank = (finalScore: number) => {
-    if (finalScore === 5) return { title: 'Huyền thoại quậy phá K08-11', desc: 'Bạn chắc chắn là "trùm trường" hoặc thành viên đầu sỏ chuyên bày trò cúp học ăn vặt cổng trường rồi! Ký ức về trường cũ của bạn siêu đỉnh.' };
+    if (finalScore === 5) return { title: 'Huyền thoại quậy phá 10A8-11B8-12C8', desc: 'Bạn chắc chắn là "trùm trường" hoặc thành viên đầu sỏ chuyên bày trò cúp học ăn vặt cổng trường rồi! Ký ức về trường cũ của bạn siêu đỉnh.' };
     if (finalScore >= 3) return { title: 'Học sinh tiên tiến xuất sắc', desc: 'Tuyệt vời! Bạn nhớ rất rõ những chi tiết thân thương thời đi học. Rất mong gặp lại một người bạn tuyệt vời như bạn ở buổi họp lớp sắp tới.' };
     return { title: 'Mọt sách ngoan hiền / Chuyên lo yêu thầm', desc: 'Có vẻ như ngày xưa bạn chỉ mải mê học tập, hoặc mải ngắm nhìn bạn học bàn bên nên quên mất các hoạt động ăn chơi quậy phá rồi! Hãy đến họp lớp để cùng "bù đắp" lại nhé.' };
   };
@@ -128,7 +128,7 @@ export default function MemoryQuiz() {
                 {/* Progress bar info */}
                 <div className="flex items-center justify-between text-xs font-semibold text-stone-500 font-sans uppercase">
                   <span>Câu hỏi {currentIdx + 1} / {TRIVIA_QUESTIONS.length}</span>
-                  <span className="text-amber-800">Khóa K08-11</span>
+                  <span className="text-amber-800">Khóa 10A8-11B8-12C8</span>
                 </div>
 
                 {/* Question title */}

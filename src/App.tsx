@@ -257,8 +257,9 @@ export default function App() {
               <div className="flex items-start gap-3">
                 <Phone className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p>Trưởng ban lớp trưởng: Hoàng Minh — <strong>0987.654.321</strong></p>
-                  <p className="mt-1">Thủ quỹ nghiêm khắc: Thu Trang — <strong>0912.345.678</strong></p>
+                  <p>Trưởng ban/Lớp trưởng: Trọng Huỳnh — <strong>097.3311.246</strong></p>
+                  <p className="mt-1">Bí thư cá tính: Thanh Nguyễn — <strong>0359.864.815</strong></p>
+                  <p className="mt-1">Lớp phó văn thể: Mạnh Thắng — <strong>0943.029.193</strong></p>
                 </div>
               </div>
 
