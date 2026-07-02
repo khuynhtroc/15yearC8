@@ -4,7 +4,7 @@ export const INITIAL_ALBUM: AlbumItem[] = [
   {
     id: 'a1',
     type: 'image',
-    url: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1000&auto=format&fit=crop',
+    url: 'https://lh3.googleusercontent.com/rd-d/ALs6j_H4Y1wWWIrKiuM49FHAlhZ77Ubype5GPB98_8fawoAiu9pj3193jIuQKM2ZOTDIo_JYy3Jz9N6EWIirPnzXLnm42XJqAMJicfmptN65qPKGQRNluy3XynQ-0_OwZsFf-WyfmHDJwkHh2LctMxReM1vebXVRLd6AxqomgdxfNNETYdiomD9FAz_xrXObAM3p0Mt4OAWtqV1Uu10fYYis2SEBrhNTll8lSyCVVp8Chtf77aYtC3gWV2ozfpgEbPxK5rM3vxPl5FW5l0X_79PX1J1D-x-lJKf01ylNoX54osaiDfjNrnZonmzpA_cjJQIRC64VZRIa44lL-Q60LjE75SC4vTuvVzgyhrk-Zjo5zqwUQZS18xXd_PQ9uudKYLmPDaRKF1fd_MVENOGuSwzza5gwomIVARbHb6zSxeLUcUesJGrE0f8nr7Go7vKS3fGb4Zz4oeAxxgf-QJjWW0i95Tn1a8dXfWPJsQr93pLj5CtXZqceJqOnd7D43omM7m0ADNa6Max3ycNA3oTyjp7mDdHRmfjVwZ6_QeJouu0ubr6i_eh7gw5xkwsY07DFOu9EEeWk0eS1PWRGivMF518BAEklyU5fvwN8rYPbFlxDVKs7SfrlVS5tK0-Xo3F1sCAC6Oisu5Y2iRNxFJf96Hgf8Q3KhpPeGr4apccjcIgqwYW7_N4A_rUI7z7126e0-C1CNtXblYvkVXhwmAb5_bE4dwElsVOd3TR6ZeNnCH19yRL4pXeCaISs5-QCqfMzP6r6XH866DPWSuDkLn9WgW9htTg3CT0JQFXt4g0AEMf14k5QhoTFwwIcUc9Jmpt7YpBXf0HWRl3TaFIh89YY-sCCDSUtwcpAECvaur8Mroq0ZV5LxG0mEuO2ckqLZakn9hszthH5R0mZyJlUp8cZuvpLkXduvNJaaT2u2hUvI0ojC9mT78rrPp4fgL-mtsnoeQ1t3oeTFgGhWPOeDbay3FUrlIxqem213_VnoP20RBXVgr3z5IXgVeeWa-Zauj4JlGNRxUxoZJTD7VD5g_tMbJH1tgGE6qvjWuOxwUvi7RhnVAvvhvXciYQ3wkzqFXX57oiHHLGzQueZY1pdMkydryW-fgwNeBF2t6gUpa2_dPxuXV1GdOLkD4hMd8PyTT6FtLgWIZDWOCbgF8T63irB5gKB46KfyUkmlZZpfuggCL1CKrngWcQina8yjLpix_o7R-I915d3dNirIdPOEuEAFuMcIOQzV_hMsXRLaCY2fRTaBY1Ol_MS0rO0IVgJ5pMVbWZfHkV3briQR6frK9f9pboHEycgqklR2yeDM-Zl2Kkm295uh03OFQ=w1875-h927?auditContext=prefetch',
     category: 'classroom',
     title: 'Góc lớp học 12C8 thân quen',
     description: 'Bảng đen, phấn trắng và những chiếc bàn gỗ sần sùi ghi dấu ấn của tập thể sĩ số 50 thành viên.',
@@ -14,7 +14,7 @@ export const INITIAL_ALBUM: AlbumItem[] = [
   {
     id: 'a2',
     type: 'image',
-    url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1000&auto=format&fit=crop',
+    url: 'https://scontent-lax3-2.xx.fbcdn.net/v/t39.30808-6/459835240_8178898165511870_4526181660021372521_n.jpg?stp=dst-jpg_tt6&cstp=mx1358x820&ctp=s1358x820&_nc_cat=107&ccb=1-7&_nc_sid=2285d6&_nc_eui2=AeHEtKk2KdyeWLC3WT6TgSFLcLf8IlMMmzJwt_wiUwybMslxxtHnqe9N-zkQrTZJLG9ZhYjG_o8Gz_5DIa09RJ5C&_nc_ohc=c52WRUUpL_QQ7kNvwGhsY-3&_nc_oc=Ado5CxM3Mf9LEOUfx-WyHQEFZrvF5548-t1n14LMnBTSSWpf8Ztox5I-IwuDRfrrzbU&_nc_zt=23&_nc_ht=scontent-lax3-2.xx&_nc_gid=d6do7FCadQmqNUx-auFnTA&_nc_ss=7b22e&oh=00_AQBVQZr4gTfmBZtM1jyMZussososjFGgF5__-hnjQLAZFw&oe=6A4C39A2',
     category: 'prom-reunion',
     title: 'Lễ tốt nghiệp niên khóa 2008-2011',
     description: 'Ngày bế giảng đầy nước mắt tại trường THPT Hàm Rồng, những tà áo dài trắng viết kín chữ ký và lời chúc của các thành viên 12C8.',
@@ -29,22 +29,22 @@ export const INITIAL_ALBUM: AlbumItem[] = [
     title: 'Lưu bút viết vội ngày cuối cấp',
     description: 'Những trang giấy thơm mùi mực tím của học sinh Hàm Rồng, lưu giữ từng địa chỉ Yahoo, số điện thoại bàn và lời dặn dò của Thầy Nguyễn Thanh Hải.',
     year: '2011',
-    submittedBy: 'Hoàng Lan (12C8)'
+    submittedBy: 'Ban Liên Lạc'
   },
   {
     id: 'a4',
     type: 'image',
-    url: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=1000&auto=format&fit=crop',
+    url: 'https://scontent-lax7-1.xx.fbcdn.net/v/t39.30808-6/558011686_24925964857038763_8681081218331081311_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1150&ctp=s2048x1150&_nc_cat=101&ccb=1-7&_nc_sid=aa7b47&_nc_eui2=AeFlle3HfrahRVW-hn3zE-GB6Z7BU111vJHpnsFTXXW8kQMOUx-rGjl64t6PIlCP0J8-d7xvVG9BZLIxKnEDvCor&_nc_ohc=kuVSh-XMYYcQ7kNvwEPyKko&_nc_oc=AdpMX1tMyGkO1uZzwaQLlRBEwFw8kpOntHGoM-Rct8NAh7NoqgIQ_Zh1fx47JLzEn5U&_nc_zt=23&_nc_ht=scontent-lax7-1.xx&_nc_gid=WZI7WQcursSoGfxYJU9fyA&_nc_ss=7b22e&oh=00_AQD3DxZn7AQiv3OlWpF1mQ4ocLsxyPRRPO7noPRegZhrIw&oe=6A4C50E1',
     category: 'extracurricular',
-    title: 'Hội trại 26/03 rực lửa Hàm Rồng',
-    description: 'Đêm lửa trại bùng cháy, 50 thành viên lớp 11B8 nắm tay nhau hát vang những khúc ca tuổi trẻ dưới bầu trời đầy sao.',
-    year: '2010',
-    submittedBy: 'Tuấn Anh (12C8)'
+    title: 'Du xuân quê hương Yên Định',
+    description: 'Trên thùng xe công nông nơi đồng quê, thành viên lớp 11B8 nắm tay nhau hát vang những khúc ca tuổi trẻ dưới bầu trời đầy nắng và gió.',
+    year: '2011',
+    submittedBy: 'Ban Liên Lạc'
   },
   {
     id: 'a5',
     type: 'image',
-    url: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=1000&auto=format&fit=crop',
+    url: 'https://lh3.googleusercontent.com/rd-d/ALs6j_Hu6ewq5_O93kq-xGSAB_AjU4ZQPEytQBag6rZw59KoXDDxUmvcQRyPNymVdqTa7-AEXxxuX5e_l7mqGtWCDUOEEX5WirSlyF9eWVMq6iRfZ3CUaFSwVe6ts59OYEHnXbXnGJ0ZzCzSXujzbG0ieQEHeRIUkH5UHmmXWFIDtuRd-TwRZ8TeYxjxySr9l7r7_jvfhY8Z1X8X5DCQa3ha27ogHujZoHR1mqtGs7Aw8e79ex7U7NaRkHQGjRXferd8qHIucwfF9cKopWx-b1C9LxPPzOMrQWn9DmeIJSSh8-hRzLseiQw27R4JM7CGxHFtdMHxAXbt_xmAYbUBiPNXtq2wUcvGTlEkxiIbBrILYdTQB0gqMpqnerZ7A8ig4hnN4y9cLBwlnN3qGr1PJiTGJw5h21cVKfBZmMk6i5ukzYRlt88-KL_L7vQ6TSNTMGvVJemEawxzoCLLRS0BysbGmeQYo-KYZEG6fPU8B6RhqAoSJ2Rj83yibs-_vqO1yaD9RubSwXPOcGNEMWzSPNPXnl63Yvw0R0cdOnd43nRmfMEdOK3iRGmUCp-3UMRFyS6HYywznaaidtflTkOlAGfmtS-oS_gkH1B2fMl-I85si0riznuBPMoEcd72D7F6widJbDvQ1qgoPAQfYOVqIliG49EvEYVT9Ch8x8nYD-OqTnjDGsQh85O4TjmiCY6LpIDP2VKgmJpYhqT_4llEOVzyeKY7dhY5rcjmJ2rua3mGPLBXH5oj20uM16AJ5uFXLyNgb0htoWCut545FafxMlkuAlgIJzci6_PwQRev8cpbaeUSLvanr_Qpdbh46588eTdYcOwMue3Bjv3F5lWd9lF1vp3ZrWftKFOEBNJ7CZVNpEs3C4PdKS86HcUwsIa0tfpvizqGoFo6MPLU15VPV9ZWcYfI_wWO09bm_v3imulVosWGqyk6ZG4INfpjGx8IFNbV4rX5C2JDqA6jKt6b0RzCujXrWKdctSkf2P7RqSg8bjQveJ0Zk3HwLAAayVfJjU4107_s_YWQMnaq6Au6vV_H5hNJczrW5-wENKU4XwCQ6IV7btJQSnzP05nomNHLezHQkJuuJxTGH_ZLQPwuu5mzF3Q-AhsCdtvB7FuP7185tx_PS6Wx02-2XsyoOcuwh2Q-3eZTfVbOBLG36_yJXulDOvDUHJI_yH0e2cKURM38BlJp6o_d-R9I6YFDidDFJ0mLDkRhwdjyCSbUYkNctMOjjsz1_I0d9VyESTPnuy9-mJYEbK2v6Y78mWLkGJvoJKAYMdrewPCwrGuHw9yJr9pCPyZOm5hJjlVjMgJ0tZTH-QDio_CGKTmC=w1875-h927?auditContext=prefetch',
     category: 'teachers',
     title: 'Thầy Nguyễn Thanh Hải - Người lái đò thầm lặng',
     description: 'Thầy chủ nhiệm kính yêu của tập thể 10A8 - 11B8 - 12C8. Người đã nghiêm khắc uốn nắn nhưng cũng đầy bao dung nâng bước 50 học sinh trưởng thành.',
@@ -54,12 +54,12 @@ export const INITIAL_ALBUM: AlbumItem[] = [
   {
     id: 'a6',
     type: 'image',
-    url: 'https://images.unsplash.com/photo-1528127269322-539801943592?w=1000&auto=format&fit=crop',
+    url: 'https://lh3.googleusercontent.com/rd-d/ALs6j_EKqMNT3_tQHzzIn2LKW6YVlvhDpOrhbEwIhA8iABDJrXkeMQZ72SXRc0pvZs7x9c1XR3b0EWJj4sDzPAx-axk_bapickC9rr9T-q6ezQvZlQRIQdznRJ7FIfzdQO_EhBHtjjnpe0FjbaEIGkHOP1iLv6PYyDeGOlecFUq5eU11dPuJZFescvjC0CjSGpbpCA62-yAlKHaT3H-RTuRUGWa5DIhwNGAKSLoDmSNLG7E2gh9R_6vdD-bqlWjGEkwH2mQYLYFwdINvpP2HrUKwRnccc3gQz0pKijwMouRbwNqLjDK8zX4VuiHk5tMFWuychaudlVy9zyI3jt8nRZs8a0p87goQdUvcxxqeYHwHOS4Q-nRfjZf7uRLnOjMjVfIcNQHCV583Uct4iU3OARSRyVUhMfNKVQ3IHt2c2cRT5EEhjRfux5m4D9kx_IywznX7Z1QcovI_8ZPbp9DAdZuzvHbA6-l7A1K_SPNtk0EUgzcqe2Wgp4DdyFYJSxd06mAR2xuY6uFPwXSwPZBS7a1v0jIhkWBuKZZFM84GSX1MvpKILSPLO6JLr04RHi4uKL5EQ5t5Q2Ayv2DYX_Hz4QfRWB1pg_opJ_ysDqcucG12LvrQjAcBbrBDekvEOZJwg1fyUBz9ARloHa87YdY6TofU9MhUdAm3o63I8-2RCljxrifK9NRwEJTZeR-x_HQ2GUc-JhD2yb2fj_F1RP1iuIzsMU8W2_vcbbPSINLjD4KLx5Qxlv7ieuOF1y-KQQMssOWK1DuMuh_1tOGXcvUY3W9Kn3JJrYUCpVcUqh9BBipqsC3bg2BH40olaVqX0TADxkYTHehbxU7hliOQTeKXXi7Eu-Ggyka7gzFQ1yiQsKU8b--XzdqP6oetbJFqn-3T_VYrqhdg67qa8BBkp2wzLp5o18YllrrlDgJaU6G2izMmnE21aDJyztDIJurkewq0AVdsJzHAYDY6BYx7-DLty5qQtVVbdl31yG5zCOHgJAeWws7T3OS2DSJaMuk9zsAInoe8oc7JXs3vIM4VKeabGBtgu80oqcr-bvEiAKkjAag6KSxbGpRfH5S8NtI1GT0Q9L75BVxX2_e4ynRtvQHvR_XOLLPEeYNI-Fo3y42QJxaOFqhZ3XxdFS4fMoUtgw9XHo9NruPmyFQIB7hVLr9YPAUR8OvlXFsF93n5b8DbeoefnujhDFD9Rdv0-FcfL2ZQ3QpI-7HEhyYn9dEW6PkLJrB6WpVGtWY-GA2B8zw9iwDjmFuyteV8OKHjlIhpZafKi7N-DY73EuVyGWnyuY6o5oV1q4FLexTPLweIPuRkgsfzOWCJWnW8uidi=w1875-h927?auditContext=prefetch',
     category: 'candids',
     title: 'Con đường phượng bay rực nắng Hàm Rồng',
     description: 'Góc sân trường Hàm Rồng ngày hè rực nắng phượng hồng, nơi lưu giữ tiếng cười tinh nghịch của thời áo trắng.',
     year: '2010',
-    submittedBy: 'Minh Đức (12C8)'
+    submittedBy: 'Ban Liên Lạc'
   }
 ];
 
