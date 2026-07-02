@@ -39,10 +39,10 @@ export default function BackgroundMusic() {
 
   return (
     <>
-      {/* Proxied Google Drive Audio Stream link to bypass CORS/Supported Source issues */}
+      {/* Local uploaded background music from root folder */}
       <audio
         ref={audioRef}
-        src="/api/music"
+        src="/Music_Relax_Memories.mp3"
         loop
         preload="auto"
       />

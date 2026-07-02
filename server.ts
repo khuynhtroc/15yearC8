@@ -7,6 +7,17 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
+  // Serve Music_Relax_Memories.mp3 from the root directory of the project
+  app.get("/Music_Relax_Memories.mp3", (req, res) => {
+    const filePath = path.join(process.cwd(), "Music_Relax_Memories.mp3");
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error("Music_Relax_Memories.mp3 not found:", err);
+        res.status(404).send("Music file not found yet. Please upload Music_Relax_Memories.mp3 to the root folder.");
+      }
+    });
+  });
+
   // Proxy Google Drive audio to bypass CORS/virus-scans/auth restrictions
   app.get("/api/music", (req, res) => {
     const fileId = "1fymBVpskH3d1VzyX1PT3B8UQae9h3Zwa";
