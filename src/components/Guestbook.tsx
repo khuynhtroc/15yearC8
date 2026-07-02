@@ -40,7 +40,7 @@ export default function Guestbook() {
   ];
 
   const classGroups = [
-    '12A1', '12A2', '12A3', '12A4', '12A5', '12A6', '12A7', '12A8', '12A9', '12A10', 'Thầy Cô', 'Khách Quý'
+    '10A8', '11B8', '12C8', 'Lớp Khác', 'Thầy Cô', 'Khách Quý'
   ];
 
   // Colorful combinations for random avatars
