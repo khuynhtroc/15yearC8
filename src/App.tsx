@@ -8,6 +8,7 @@ import Guestbook from './components/Guestbook';
 import MemoryQuiz from './components/MemoryQuiz';
 import RSVPForm from './components/RSVPForm';
 import DonationPortal from './components/DonationPortal';
+import BackgroundMusic from './components/BackgroundMusic';
 import { Mail, Phone, MapPin, Gift, Heart, BookOpen, GraduationCap, ChevronUp } from 'lucide-react';
 
 // Falling red phượng flower petals effect component
@@ -173,6 +174,9 @@ export default function App() {
       
       {/* Falling phượng petals canvas background */}
       <FallingPetalsCanvas active={petalsActive} />
+
+      {/* Background Music Player */}
+      <BackgroundMusic />
 
       {/* Navigation Header */}
       <Header activeSection={activeSection} setActiveSection={setActiveSection} />
