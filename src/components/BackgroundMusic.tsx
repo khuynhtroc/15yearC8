@@ -79,7 +79,7 @@ export default function BackgroundMusic() {
                 onClick={handleEnter}
                 className="w-full bg-amber-800 hover:bg-amber-900 text-white font-medium py-3.5 px-6 rounded-xl shadow-lg shadow-amber-800/20 hover:shadow-amber-900/30 transition-all duration-300 font-sans cursor-pointer flex items-center justify-center gap-2 text-sm uppercase tracking-wider"
               >
-                <span>Bước vào & Nghe nhạc</span>
+                <span>Bước vào & Cảm nhận</span>
                 <Heart className="w-4 h-4 fill-white" />
               </button>
             </motion.div>
