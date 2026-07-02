@@ -497,8 +497,8 @@ export default function RSVPForm() {
   // Handle RSVP Submit
   const handleRsvpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!rsvpName.trim() || !rsvpPhone.trim() || !rsvpEmail.trim()) {
-      setRsvpError('Vui lòng điền đầy đủ các trường thông tin bắt buộc (Họ tên, SĐT, Email)!');
+    if (!rsvpName.trim()) {
+      setRsvpError('Vui lòng điền họ và tên của bạn!');
       return;
     }
 
@@ -554,7 +554,7 @@ export default function RSVPForm() {
       setRsvpMessage('');
     } catch (err: any) {
       console.error(err);
-      setRsvpError('Có lỗi xảy ra khi gửi đăng ký. Vui lòng liên hệ ban liên lạc hoặc thử lại!');
+      setRsvpError('Có lỗi xảy ra khi gửi đăng ký: ' + (err.message || err.toString()));
     } finally {
       setIsRsvpSubmitting(false);
     }
@@ -563,8 +563,8 @@ export default function RSVPForm() {
   // Handle Uniform Submit
   const handleUniformSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!uniName.trim() || !uniPhone.trim() || !uniEmail.trim()) {
-      setUniError('Vui lòng điền đầy đủ thông tin liên hệ bắt buộc!');
+    if (!uniName.trim()) {
+      setUniError('Vui lòng điền họ và tên người nhận!');
       return;
     }
 
@@ -630,7 +630,7 @@ export default function RSVPForm() {
       setUniQty(1);
     } catch (err: any) {
       console.error(err);
-      setUniError('Có lỗi xảy ra khi gửi đăng ký. Vui lòng thử lại!');
+      setUniError('Có lỗi xảy ra khi gửi đăng ký đồng phục: ' + (err.message || err.toString()));
     } finally {
       setIsUniSubmitting(false);
     }
@@ -813,28 +813,26 @@ export default function RSVPForm() {
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="block text-xs font-bold text-stone-700 uppercase tracking-wide">Số điện thoại *</label>
+                            <label className="block text-xs font-bold text-stone-700 uppercase tracking-wide">Số điện thoại</label>
                             <input
                               type="tel"
                               placeholder="09xx.xxx.xxx"
                               value={rsvpPhone}
                               onChange={(e) => setRsvpPhone(e.target.value)}
                               className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-800 font-sans text-sm bg-stone-50"
-                              required
                             />
                           </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div className="space-y-1.5">
-                            <label className="block text-xs font-bold text-stone-700 uppercase tracking-wide">Địa chỉ Email *</label>
+                            <label className="block text-xs font-bold text-stone-700 uppercase tracking-wide">Địa chỉ Email</label>
                             <input
                               type="email"
                               placeholder="tenban@gmail.com"
                               value={rsvpEmail}
                               onChange={(e) => setRsvpEmail(e.target.value)}
                               className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-800 font-sans text-sm bg-stone-50"
-                              required
                             />
                           </div>
 
@@ -984,28 +982,26 @@ export default function RSVPForm() {
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="block text-xs font-bold text-stone-700 uppercase tracking-wide">Số điện thoại liên hệ *</label>
+                            <label className="block text-xs font-bold text-stone-700 uppercase tracking-wide">Số điện thoại liên hệ</label>
                             <input
                               type="tel"
                               placeholder="09xx.xxx.xxx"
                               value={uniPhone}
                               onChange={(e) => setUniPhone(e.target.value)}
                               className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-800 font-sans text-sm bg-stone-50"
-                              required
                             />
                           </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div className="space-y-1.5">
-                            <label className="block text-xs font-bold text-stone-700 uppercase tracking-wide">Địa chỉ Email *</label>
+                            <label className="block text-xs font-bold text-stone-700 uppercase tracking-wide">Địa chỉ Email</label>
                             <input
                               type="email"
                               placeholder="tenban@gmail.com"
                               value={uniEmail}
                               onChange={(e) => setUniEmail(e.target.value)}
                               className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-800 font-sans text-sm bg-stone-50"
-                              required
                             />
                           </div>
 
