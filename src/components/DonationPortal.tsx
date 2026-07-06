@@ -123,8 +123,11 @@ export default function DonationPortal() {
   const totalRaised = donations.reduce((acc, curr) => acc + (curr.amount || 0), 0);
   const percentage = Math.min(Math.round((totalRaised / targetGoal) * 100), 100);
 
-  const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(val);
+  const formatCurrency = (val: any) => {
+    if (val === undefined || val === null) return '0 ₫';
+    const num = typeof val === 'number' ? val : parseInt(String(val).replace(/[^0-9]/g, ''), 10);
+    if (isNaN(num)) return '0 ₫';
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(num);
   };
 
   const filteredDonations = donations.filter((item) => {

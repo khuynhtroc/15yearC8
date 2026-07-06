@@ -345,7 +345,8 @@ export default function RSVPForm() {
       donationsQuery.forEach((doc) => {
         const d = doc.data();
         const dateStr = d.createdAt ? new Date(d.createdAt.seconds * 1000).toLocaleString('vi-VN') : '—';
-        const amountStr = d.amount ? Number(d.amount).toLocaleString('vi-VN') + ' đ' : '0 đ';
+        const numVal = d.amount ? Number(String(d.amount).replace(/[^0-9]/g, '')) : 0;
+        const amountStr = numVal ? numVal.toLocaleString('vi-VN') + ' đ' : '0 đ';
         donationsList.push([
           dateStr,
           d.name,
