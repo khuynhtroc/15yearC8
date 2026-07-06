@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { INITIAL_ALBUM } from '../data';
 import { AlbumItem } from '../types';
-import { Camera, Image, Plus, X, Upload, Check, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Camera, Image, Plus, X, Upload, Check, ChevronLeft, ChevronRight, Pencil, Trash2 } from 'lucide-react';
 
 export default function MemoryAlbum() {
   const [albums, setAlbums] = useState<AlbumItem[]>(INITIAL_ALBUM);
@@ -22,6 +22,40 @@ export default function MemoryAlbum() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+
+  // Edit & Delete States for Contributed Photos
+  const [isEditing, setIsEditing] = useState(false);
+  const [editTitle, setEditTitle] = useState('');
+  const [editUrl, setEditUrl] = useState('');
+  const [editCategory, setEditCategory] = useState<'classroom' | 'teachers' | 'extracurricular' | 'prom-reunion' | 'candids'>('candids');
+  const [editDescription, setEditDescription] = useState('');
+  const [editYear, setEditYear] = useState('2011');
+  const [editSubmittedBy, setEditSubmittedBy] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [editError, setEditError] = useState('');
+  const [editSuccess, setEditSuccess] = useState(false);
+  const [editPassword, setEditPassword] = useState('');
+
+  // Sync edit state with selected photo
+  useEffect(() => {
+    if (selectedPhoto) {
+      setEditTitle(selectedPhoto.title || '');
+      setEditUrl(selectedPhoto.url || '');
+      setEditCategory(selectedPhoto.category || 'candids');
+      setEditDescription(selectedPhoto.description || '');
+      setEditYear(selectedPhoto.year || '2011');
+      setEditSubmittedBy(selectedPhoto.submittedBy || '');
+      setIsEditing(false);
+      setIsDeleting(false);
+      setEditError('');
+      setEditSuccess(false);
+      setEditPassword('');
+    } else {
+      setIsEditing(false);
+      setIsDeleting(false);
+      setEditPassword('');
+    }
+  }, [selectedPhoto]);
 
   // Load submissions from Firestore
   useEffect(() => {
@@ -93,6 +127,80 @@ export default function MemoryAlbum() {
     } catch (err: any) {
       console.error(err);
       setError('Có lỗi xảy ra khi lưu kỷ niệm. Vui lòng thử lại!');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleUpdatePhoto = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedPhoto) return;
+    if (!editTitle || !editUrl || !editSubmittedBy) {
+      setEditError('Vui lòng điền đầy đủ các thông tin chính (Tiêu đề, Link ảnh, Người gửi)!');
+      return;
+    }
+
+    if (editPassword !== "Abcd@1993") {
+      setEditError('Mật khẩu xác thực Ban quản trị không chính xác!');
+      return;
+    }
+
+    if (!editUrl.startsWith('http://') && !editUrl.startsWith('https://')) {
+      setEditError('Đường dẫn ảnh phải bắt đầu bằng http:// hoặc https://');
+      return;
+    }
+
+    setSubmitting(true);
+    setEditError('');
+
+    try {
+      const docRef = doc(db, 'album_memories', selectedPhoto.id);
+      const updatedData = {
+        title: editTitle,
+        url: editUrl,
+        category: editCategory,
+        description: editDescription,
+        year: editYear,
+        submittedBy: editSubmittedBy,
+        updatedAt: serverTimestamp()
+      };
+      await updateDoc(docRef, updatedData);
+      
+      // Update local state for lightbox
+      setSelectedPhoto({
+        ...selectedPhoto,
+        ...updatedData
+      });
+      
+      setEditSuccess(true);
+      setTimeout(() => {
+        setEditSuccess(false);
+        setIsEditing(false);
+        setEditPassword('');
+      }, 1500);
+    } catch (err: any) {
+      console.error(err);
+      setEditError('Có lỗi xảy ra khi cập nhật kỷ niệm. Vui lòng thử lại!');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleDeletePhoto = async () => {
+    if (!selectedPhoto) return;
+    if (editPassword !== "Abcd@1993") {
+      setEditError('Mật khẩu xác thực Ban quản trị không chính xác!');
+      return;
+    }
+    setSubmitting(true);
+    setEditError('');
+    try {
+      const docRef = doc(db, 'album_memories', selectedPhoto.id);
+      await deleteDoc(docRef);
+      setSelectedPhoto(null); // Close lightbox
+    } catch (err: any) {
+      console.error(err);
+      setEditError('Có lỗi xảy ra khi xóa kỷ niệm. Vui lòng thử lại!');
     } finally {
       setSubmitting(false);
     }
@@ -433,40 +541,234 @@ export default function MemoryAlbum() {
 
                 {/* Right: Metadata Panel */}
                 <div className="w-full md:w-80 p-6 flex flex-col justify-between bg-[#fdfcf7] border-t md:border-t-0 md:border-l border-stone-200 overflow-y-auto">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="font-display font-bold text-xs text-[#fdfcf7] bg-amber-800 px-3 py-1 rounded-full">
-                        Năm {selectedPhoto.year || '2011'}
-                      </span>
-                      <span className="font-sans text-xs text-stone-500 font-medium uppercase tracking-wide">
-                        {selectedPhoto.category === 'classroom' && 'Lớp Học'}
-                        {selectedPhoto.category === 'teachers' && 'Thầy Cô'}
-                        {selectedPhoto.category === 'extracurricular' && 'Ngoại Khóa'}
-                        {selectedPhoto.category === 'prom-reunion' && 'Kỷ Yếu'}
-                        {selectedPhoto.category === 'candids' && 'Khoảnh Khắc Vui'}
-                      </span>
-                    </div>
+                  {isEditing ? (
+                    <form onSubmit={handleUpdatePhoto} className="space-y-4 font-sans text-left flex-1 flex flex-col justify-between">
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <h4 className="font-serif font-bold text-stone-900 text-sm">Chỉnh Sửa Kỷ Niệm</h4>
+                          <span className="text-[10px] font-sans font-bold bg-amber-800/10 text-amber-800 px-2 py-0.5 rounded-full">Sửa</span>
+                        </div>
+                        
+                        {editError && (
+                          <div className="bg-red-50 text-red-700 p-2 rounded-lg border border-red-100 text-[10px]">
+                            {editError}
+                          </div>
+                        )}
+                        {editSuccess && (
+                          <div className="bg-emerald-50 text-emerald-800 p-2 rounded-lg border border-emerald-100 text-[10px] text-center font-semibold animate-pulse">
+                            Cập nhật thành công!
+                          </div>
+                        )}
 
-                    <h3 className="font-serif text-xl font-bold text-stone-900 leading-tight">
-                      {selectedPhoto.title}
-                    </h3>
+                        <div className="space-y-1">
+                          <label className="block text-[10px] font-bold text-stone-700 uppercase tracking-wide">Người gửi *</label>
+                          <input
+                            type="text"
+                            value={editSubmittedBy}
+                            onChange={(e) => setEditSubmittedBy(e.target.value)}
+                            className="w-full px-3 py-1.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-800 text-xs bg-white"
+                            required
+                          />
+                        </div>
 
-                    {selectedPhoto.description && (
-                      <p className="font-sans text-stone-600 text-sm leading-relaxed">
-                        {selectedPhoto.description}
-                      </p>
-                    )}
-                  </div>
+                        <div className="space-y-1">
+                          <label className="block text-[10px] font-bold text-stone-700 uppercase tracking-wide">Tiêu đề *</label>
+                          <input
+                            type="text"
+                            value={editTitle}
+                            onChange={(e) => setEditTitle(e.target.value)}
+                            className="w-full px-3 py-1.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-800 text-xs bg-white"
+                            required
+                          />
+                        </div>
 
-                  <div className="pt-6 border-t border-stone-200 mt-6 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-amber-800/10 flex items-center justify-center font-serif text-amber-800 font-extrabold text-sm border border-amber-800/15">
-                      {selectedPhoto.submittedBy ? selectedPhoto.submittedBy.charAt(0) : 'A'}
+                        <div className="space-y-1">
+                          <label className="block text-[10px] font-bold text-stone-700 uppercase tracking-wide">Đường dẫn ảnh (URL) *</label>
+                          <input
+                            type="text"
+                            value={editUrl}
+                            onChange={(e) => setEditUrl(e.target.value)}
+                            className="w-full px-3 py-1.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-800 text-xs bg-white font-mono"
+                            required
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="space-y-1">
+                            <label className="block text-[10px] font-bold text-stone-700 uppercase tracking-wide">Năm</label>
+                            <select
+                              value={editYear}
+                              onChange={(e) => setEditYear(e.target.value)}
+                              className="w-full px-2 py-1.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-800 text-xs bg-white"
+                            >
+                              <option value="2008">2008</option>
+                              <option value="2009">2009</option>
+                              <option value="2010">2010</option>
+                              <option value="2011">2011</option>
+                              <option value="2026">2026</option>
+                            </select>
+                          </div>
+
+                          <div className="space-y-1">
+                            <label className="block text-[10px] font-bold text-stone-700 uppercase tracking-wide">Chủ đề</label>
+                            <select
+                              value={editCategory}
+                              onChange={(e) => setEditCategory(e.target.value as any)}
+                              className="w-full px-2 py-1.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-800 text-xs bg-white"
+                            >
+                              <option value="classroom">Lớp Học</option>
+                              <option value="teachers">Thầy Cô</option>
+                              <option value="extracurricular">Ngoại Khóa</option>
+                              <option value="prom-reunion">Kỷ Yếu</option>
+                              <option value="candids">Khoảnh Khắc</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-[10px] font-bold text-stone-700 uppercase tracking-wide">Mô tả câu chuyện</label>
+                          <textarea
+                            rows={3}
+                            value={editDescription}
+                            onChange={(e) => setEditDescription(e.target.value)}
+                            className="w-full px-3 py-1.5 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-800 text-xs bg-white resize-none"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-[10px] font-bold text-amber-950 uppercase tracking-wide">Mật khẩu xác thực Ban quản trị *</label>
+                          <input
+                            type="password"
+                            placeholder="Nhập mật khẩu..."
+                            value={editPassword}
+                            onChange={(e) => setEditPassword(e.target.value)}
+                            className="w-full px-3 py-1.5 rounded-xl border border-amber-300 focus:outline-none focus:border-amber-800 text-xs bg-white placeholder-stone-400"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex gap-2 pt-4">
+                        <button
+                          type="submit"
+                          disabled={submitting}
+                          className="flex-1 bg-amber-800 hover:bg-amber-900 disabled:bg-amber-800/50 text-white font-bold text-xs py-2.5 rounded-xl shadow cursor-pointer transition text-center"
+                        >
+                          Cập nhật
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setIsEditing(false)}
+                          className="flex-1 bg-stone-100 hover:bg-stone-200 text-stone-600 font-bold text-xs py-2.5 rounded-xl border border-stone-200 cursor-pointer transition text-center"
+                        >
+                          Hủy
+                        </button>
+                      </div>
+                    </form>
+                  ) : isDeleting ? (
+                    <div className="space-y-4 font-sans text-center py-6 flex-1 flex flex-col justify-center">
+                      <Trash2 className="w-12 h-12 text-red-600 mx-auto bg-red-50 p-2.5 rounded-full border border-red-100" />
+                      <div>
+                        <h4 className="font-serif font-bold text-stone-900 text-base">Xóa Kỷ Niệm Này?</h4>
+                        <p className="text-stone-500 text-xs leading-relaxed mt-1">Hành động này sẽ xóa vĩnh viễn bức ảnh khỏi album lớp và không thể hoàn tác.</p>
+                      </div>
+
+                      {editError && (
+                        <div className="bg-red-50 text-red-700 p-2 rounded-lg border border-red-100 text-[10px] text-left">
+                          {editError}
+                        </div>
+                      )}
+
+                      <div className="space-y-1 text-left">
+                        <label className="block text-[10px] font-bold text-amber-950 uppercase tracking-wide">Mật khẩu xác thực Ban quản trị *</label>
+                        <input
+                          type="password"
+                          placeholder="Nhập mật khẩu..."
+                          value={editPassword}
+                          onChange={(e) => setEditPassword(e.target.value)}
+                          className="w-full px-3 py-1.5 rounded-xl border border-amber-300 focus:outline-none focus:border-amber-800 text-xs bg-white placeholder-stone-400"
+                          required
+                        />
+                      </div>
+                      
+                      <div className="flex gap-2 pt-4">
+                        <button
+                          onClick={handleDeletePhoto}
+                          disabled={submitting}
+                          className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold text-xs py-2.5 rounded-xl shadow cursor-pointer transition"
+                        >
+                          Đồng ý xóa
+                        </button>
+                        <button
+                          onClick={() => {
+                            setIsDeleting(false);
+                            setEditError('');
+                            setEditPassword('');
+                          }}
+                          className="flex-1 bg-stone-100 hover:bg-stone-200 text-stone-600 font-bold text-xs py-2.5 rounded-xl border border-stone-200 cursor-pointer transition"
+                        >
+                          Hủy bỏ
+                        </button>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-stone-400 text-[10px] uppercase tracking-wider font-semibold">Người gửi đóng góp</p>
-                      <p className="text-stone-800 font-sans text-sm font-semibold">{selectedPhoto.submittedBy || 'Ẩn danh'}</p>
-                    </div>
-                  </div>
+                  ) : (
+                    <>
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <span className="font-display font-bold text-xs text-[#fdfcf7] bg-amber-800 px-3 py-1 rounded-full">
+                            Năm {selectedPhoto.year || '2011'}
+                          </span>
+                          <span className="font-sans text-xs text-stone-500 font-medium uppercase tracking-wide">
+                            {selectedPhoto.category === 'classroom' && 'Lớp Học'}
+                            {selectedPhoto.category === 'teachers' && 'Thầy Cô'}
+                            {selectedPhoto.category === 'extracurricular' && 'Ngoại Khóa'}
+                            {selectedPhoto.category === 'prom-reunion' && 'Kỷ Yếu'}
+                            {selectedPhoto.category === 'candids' && 'Khoảnh Khắc Vui'}
+                          </span>
+                        </div>
+
+                        <h3 className="font-serif text-xl font-bold text-stone-900 leading-tight">
+                          {selectedPhoto.title}
+                        </h3>
+
+                        {selectedPhoto.description && (
+                          <p className="font-sans text-stone-600 text-sm leading-relaxed">
+                            {selectedPhoto.description}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="space-y-4 pt-6 border-t border-stone-200 mt-6">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-amber-800/10 flex items-center justify-center font-serif text-amber-800 font-extrabold text-sm border border-amber-800/15">
+                            {selectedPhoto.submittedBy ? selectedPhoto.submittedBy.charAt(0) : 'A'}
+                          </div>
+                          <div>
+                            <p className="text-stone-400 text-[10px] uppercase tracking-wider font-semibold">Người gửi đóng góp</p>
+                            <p className="text-stone-800 font-sans text-sm font-semibold">{selectedPhoto.submittedBy || 'Ẩn danh'}</p>
+                          </div>
+                        </div>
+
+                        {/* Actions for User Submitted Photos */}
+                        {!INITIAL_ALBUM.some(item => item.id === selectedPhoto.id) && (
+                          <div className="flex gap-2 pt-2">
+                            <button
+                              onClick={() => setIsEditing(true)}
+                              className="flex-1 flex items-center justify-center gap-1 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs py-2.5 rounded-xl transition border border-stone-200 cursor-pointer"
+                            >
+                              <Pencil className="w-3.5 h-3.5 text-stone-500" /> Sửa ảnh
+                            </button>
+                            <button
+                              onClick={() => setIsDeleting(true)}
+                              className="flex-1 flex items-center justify-center gap-1 bg-red-50 hover:bg-red-100 text-red-700 font-bold text-xs py-2.5 rounded-xl transition border border-red-100 cursor-pointer"
+                            >
+                              <Trash2 className="w-3.5 h-3.5 text-red-500" /> Xóa ảnh
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
               </motion.div>
             </div>

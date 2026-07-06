@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { DonationData } from '../types';
-import { Gift, Heart, QrCode, Check, TrendingUp, AlertCircle, Copy, Search, ShieldCheck } from 'lucide-react';
+import { Gift, Heart, QrCode, Check, TrendingUp, AlertCircle, Copy, Search, ShieldCheck, Trash2, X } from 'lucide-react';
 
 export default function DonationPortal() {
   const [donations, setDonations] = useState<DonationData[]>([]);
@@ -19,6 +19,12 @@ export default function DonationPortal() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [copiedText, setCopiedText] = useState(false);
+
+  // Deletion States for Admin
+  const [deletingDonation, setDeletingDonation] = useState<DonationData | null>(null);
+  const [deletePassword, setDeletePassword] = useState('');
+  const [deleteError, setDeleteError] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Load donations from Firestore
   useEffect(() => {
@@ -57,7 +63,7 @@ export default function DonationPortal() {
       setError('Vui lòng điền Họ tên hoặc tích chọn Ủng hộ ẩn danh!');
       return;
     }
-    const donationAmount = parseFloat(amount.replace(/,/g, ''));
+    const donationAmount = parseInt(amount.replace(/[^0-9]/g, ''), 10);
     if (isNaN(donationAmount) || donationAmount <= 0) {
       setError('Vui lòng nhập số tiền hợp lệ!');
       return;
@@ -87,6 +93,28 @@ export default function DonationPortal() {
       setError('Có lỗi xảy ra khi gửi báo cáo ủng hộ. Vui lòng thử lại!');
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteDonation = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!deletingDonation) return;
+    if (deletePassword !== "Abcd@1993") {
+      setDeleteError("Mật khẩu xác thực Ban quản trị không chính xác!");
+      return;
+    }
+
+    setIsDeleting(true);
+    setDeleteError('');
+    try {
+      await deleteDoc(doc(db, 'donations', deletingDonation.id!));
+      setDeletingDonation(null);
+      setDeletePassword('');
+    } catch (err) {
+      console.error(err);
+      setDeleteError("Có lỗi xảy ra khi xóa thông tin. Vui lòng thử lại!");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -412,9 +440,22 @@ export default function DonationPortal() {
                           <p className="text-[10px] text-stone-500 italic truncate mt-0.5">"{item.message}"</p>
                         )}
                       </div>
-                      <span className="font-display font-bold text-amber-800 whitespace-nowrap bg-amber-800/5 px-2 py-1 rounded-md">
-                        {formatCurrency(item.amount)}
-                      </span>
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                        <span className="font-display font-bold text-amber-800 whitespace-nowrap bg-amber-800/5 px-2 py-1 rounded-md">
+                          {formatCurrency(item.amount)}
+                        </span>
+                        <button
+                          onClick={() => {
+                            setDeletingDonation(item);
+                            setDeletePassword('');
+                            setDeleteError('');
+                          }}
+                          className="p-1 hover:bg-red-50 text-stone-300 hover:text-red-600 rounded transition cursor-pointer"
+                          title="Xóa đóng góp"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
                   ))
                 ) : (
@@ -427,6 +468,78 @@ export default function DonationPortal() {
           </div>
         </div>
       </div>
+
+      {/* Deletion Dialog for Donation Entry */}
+      <AnimatePresence>
+        {deletingDonation && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white border border-stone-200 rounded-3xl p-6 max-w-sm w-full shadow-2xl relative text-left"
+            >
+              <button
+                onClick={() => setDeletingDonation(null)}
+                className="absolute right-4 top-4 text-stone-400 hover:text-stone-600 p-1 rounded-full hover:bg-stone-100 transition cursor-pointer flex items-center justify-center"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="text-center space-y-4 font-sans">
+                <div className="w-12 h-12 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto border border-red-100">
+                  <Trash2 className="w-6 h-6" />
+                </div>
+                
+                <div className="space-y-1">
+                  <h4 className="font-serif font-bold text-stone-900 text-lg">Xóa Khoản Đóng Góp?</h4>
+                  <p className="text-stone-500 text-xs leading-relaxed">
+                    Bạn đang yêu cầu xóa thông tin đóng góp của <strong>{deletingDonation.name}</strong> ({formatCurrency(deletingDonation.amount)}).
+                  </p>
+                </div>
+
+                {deleteError && (
+                  <div className="bg-red-50 text-red-700 p-2.5 rounded-xl border border-red-100 text-[11px] text-center">
+                    {deleteError}
+                  </div>
+                )}
+
+                <form onSubmit={handleDeleteDonation} className="space-y-4">
+                  <div className="space-y-1.5 text-left">
+                    <label className="block text-[10px] font-bold text-amber-950 uppercase tracking-wider">Mật khẩu xác thực Ban quản trị *</label>
+                    <input
+                      type="password"
+                      placeholder="Nhập mật khẩu..."
+                      value={deletePassword}
+                      onChange={(e) => setDeletePassword(e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl border border-stone-300 focus:outline-none focus:border-amber-800 text-xs bg-white"
+                      required
+                      autoFocus
+                    />
+                  </div>
+
+                  <div className="flex gap-2 pt-2">
+                    <button
+                      type="submit"
+                      disabled={isDeleting}
+                      className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-red-600/50 text-white font-bold text-xs py-2.5 rounded-xl transition cursor-pointer shadow"
+                    >
+                      {isDeleting ? 'Đang xóa...' : 'Xác nhận xóa'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDeletingDonation(null)}
+                      className="flex-1 bg-stone-100 hover:bg-stone-200 text-stone-600 font-bold text-xs py-2.5 rounded-xl border border-stone-200 transition cursor-pointer"
+                    >
+                      Hủy bỏ
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

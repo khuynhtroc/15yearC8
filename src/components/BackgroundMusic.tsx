@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 export default function BackgroundMusic() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showNotice, setShowNotice] = useState(true);
+  const [countdown, setCountdown] = useState(5);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // When user clicks the Enter/Notice button, play music immediately and close notice
@@ -21,6 +22,25 @@ export default function BackgroundMusic() {
         });
     }
   };
+
+  const handleEnterRef = useRef(handleEnter);
+  handleEnterRef.current = handleEnter;
+
+  // Auto-redirect to homepage after 5 seconds
+  useEffect(() => {
+    if (!showNotice) return;
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          handleEnterRef.current();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [showNotice]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -79,8 +99,8 @@ export default function BackgroundMusic() {
                 onClick={handleEnter}
                 className="w-full bg-amber-800 hover:bg-amber-900 text-white font-medium py-3.5 px-6 rounded-xl shadow-lg shadow-amber-800/20 hover:shadow-amber-900/30 transition-all duration-300 font-sans cursor-pointer flex items-center justify-center gap-2 text-sm uppercase tracking-wider"
               >
-                <span>Bước vào & Cảm nhận</span>
-                <Heart className="w-4 h-4 fill-white" />
+                <span>Bước vào & Cảm nhận ({countdown}s)</span>
+                <Heart className="w-4 h-4 fill-white animate-bounce" />
               </button>
             </motion.div>
           </div>
