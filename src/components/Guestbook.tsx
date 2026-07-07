@@ -228,22 +228,20 @@ export default function Guestbook() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-y-auto flex-1 pr-1 pb-4">
                 {posts.length > 0 ? (
                   posts.map((post) => (
-                    <motion.div
+                    <div
                       id={`guestbook-post-${post.id}`}
                       key={post.id}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="bg-[#fdfcf7] border border-stone-200 shadow-sm p-4 rounded-2xl flex flex-col justify-between hover:shadow-md transition relative group overflow-hidden"
+                      className="bg-[#fdfcf7] border border-stone-200 shadow-xs p-4 rounded-xl flex flex-col justify-between hover:shadow-md transition-all duration-200 relative group overflow-hidden min-h-[140px]"
                     >
                       {/* Top paper tape effect */}
                       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-3.5 bg-amber-800/10 border-b border-stone-100 rotate-[-1deg]" />
 
-                      <div className="space-y-3 pt-2">
+                      <div className="space-y-2 pt-2">
                         {/* Tag */}
                         {post.nostalgiaTag && (
-                          <span className="inline-block text-[9px] font-extrabold text-amber-800 bg-amber-800/5 px-2 py-0.5 rounded border border-amber-800/10">
+                          <div className="inline-block text-[10px] font-bold text-amber-800 bg-amber-800/5 px-2 py-0.5 rounded border border-amber-800/10">
                             # {post.nostalgiaTag}
-                          </span>
+                          </div>
                         )}
 
                         {/* Content text */}
@@ -253,16 +251,16 @@ export default function Guestbook() {
                       </div>
 
                       {/* Author detail info */}
-                      <div className="pt-3 border-t border-stone-100 mt-4 flex items-center gap-2.5">
-                        <div className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs border uppercase ${getAvatarStyle(post.avatarSeed || 'A')}`}>
-                          {post.name.charAt(0)}
+                      <div className="pt-3 border-t border-stone-150 mt-4 flex items-center gap-2.5">
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs border uppercase flex-shrink-0 ${getAvatarStyle(post.avatarSeed || 'A')}`}>
+                          {post.name ? post.name.charAt(0) : 'A'}
                         </div>
                         <div className="min-w-0">
-                          <p className="font-bold text-stone-800 text-[11px] truncate">{post.name}</p>
-                          <p className="text-[9px] text-stone-400 font-medium">Khóa 10A8-11B8-12C8 • Lớp: {post.classGroup}</p>
+                          <p className="font-bold text-stone-800 text-[11px] truncate">{post.name || 'Ẩn danh'}</p>
+                          <p className="text-[9px] text-stone-400 font-medium">Khóa 10A8-11B8-12C8 • Lớp: {post.classGroup || '12C8'}</p>
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   ))
                 ) : (
                   <div className="col-span-1 sm:col-span-2 text-center py-24 text-stone-400">
