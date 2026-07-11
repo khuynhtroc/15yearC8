@@ -6,6 +6,7 @@ export default function BackgroundMusic() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showNotice, setShowNotice] = useState(true);
   const [countdown, setCountdown] = useState(5);
+  const [isMutedByVideo, setIsMutedByVideo] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // When user clicks the Enter/Notice button, play music immediately and close notice
@@ -42,15 +43,40 @@ export default function BackgroundMusic() {
     return () => clearInterval(timer);
   }, [showNotice]);
 
+  // Sync video-mute triggers from other components
+  useEffect(() => {
+    const handleMute = () => {
+      setIsMutedByVideo(true);
+    };
+    const handleUnmute = () => {
+      setIsMutedByVideo(false);
+    };
+
+    window.addEventListener('bg-music-mute', handleMute);
+    window.addEventListener('bg-music-unmute', handleUnmute);
+
+    return () => {
+      window.removeEventListener('bg-music-mute', handleMute);
+      window.removeEventListener('bg-music-unmute', handleUnmute);
+    };
+  }, []);
+
+  // When background music is actively playing, make sure the video is muted
+  useEffect(() => {
+    if (isPlaying && !isMutedByVideo) {
+      window.dispatchEvent(new CustomEvent('video-mute'));
+    }
+  }, [isPlaying, isMutedByVideo]);
+
   useEffect(() => {
     if (audioRef.current) {
-      if (isPlaying) {
+      if (isPlaying && !isMutedByVideo) {
         audioRef.current.play().catch((err) => console.log('Playback error:', err));
       } else {
         audioRef.current.pause();
       }
     }
-  }, [isPlaying]);
+  }, [isPlaying, isMutedByVideo]);
 
   const togglePlay = (e: React.MouseEvent) => {
     e.stopPropagation();

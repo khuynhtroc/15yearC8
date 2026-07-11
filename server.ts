@@ -18,6 +18,17 @@ async function startServer() {
     });
   });
 
+  // Serve video.mp4 from the root directory of the project
+  app.get("/video.mp4", (req, res) => {
+    const filePath = path.join(process.cwd(), "video.mp4");
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error("video.mp4 not found:", err);
+        res.status(404).send("Video file not found yet.");
+      }
+    });
+  });
+
   // Proxy Google Drive audio to bypass CORS/virus-scans/auth restrictions
   app.get("/api/music", (req, res) => {
     const fileId = "1fymBVpskH3d1VzyX1PT3B8UQae9h3Zwa";

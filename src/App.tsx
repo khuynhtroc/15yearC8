@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Timeline from './components/Timeline';
+import MemoryVideo from './components/MemoryVideo';
 import MemoryAlbum from './components/MemoryAlbum';
 import Guestbook from './components/Guestbook';
 import MemoryQuiz from './components/MemoryQuiz';
@@ -188,6 +189,7 @@ export default function App() {
           onDonationClick={() => scrollToSection('donation')} 
         />
         <Timeline />
+        <MemoryVideo />
         <MemoryAlbum />
         <Guestbook />
         <MemoryQuiz />
