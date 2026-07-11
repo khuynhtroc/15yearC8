@@ -14,7 +14,7 @@ export const INITIAL_ALBUM: AlbumItem[] = [
   {
     id: 'a2',
     type: 'image',
-    url: 'https://scontent-lax3-2.xx.fbcdn.net/v/t39.30808-6/459835240_8178898165511870_4526181660021372521_n.jpg?stp=dst-jpg_tt6&cstp=mx1358x820&ctp=s1358x820&_nc_cat=107&ccb=1-7&_nc_sid=2285d6&_nc_eui2=AeHEtKk2KdyeWLC3WT6TgSFLcLf8IlMMmzJwt_wiUwybMslxxtHnqe9N-zkQrTZJLG9ZhYjG_o8Gz_5DIa09RJ5C&_nc_ohc=c52WRUUpL_QQ7kNvwGhsY-3&_nc_oc=Ado5CxM3Mf9LEOUfx-WyHQEFZrvF5548-t1n14LMnBTSSWpf8Ztox5I-IwuDRfrrzbU&_nc_zt=23&_nc_ht=scontent-lax3-2.xx&_nc_gid=d6do7FCadQmqNUx-auFnTA&_nc_ss=7b22e&oh=00_AQBVQZr4gTfmBZtM1jyMZussososjFGgF5__-hnjQLAZFw&oe=6A4C39A2',
+    url: 'https://img.lightshot.app/D605uAaGS8OBdbf7xsp8TA.png',
     category: 'prom-reunion',
     title: 'Lễ tốt nghiệp niên khóa 2008-2011',
     description: 'Ngày bế giảng đầy nước mắt tại trường THPT Hàm Rồng, những tà áo dài trắng viết kín chữ ký và lời chúc của các thành viên 12C8.',
@@ -34,7 +34,7 @@ export const INITIAL_ALBUM: AlbumItem[] = [
   {
     id: 'a4',
     type: 'image',
-    url: 'https://scontent-lax7-1.xx.fbcdn.net/v/t39.30808-6/558011686_24925964857038763_8681081218331081311_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1150&ctp=s2048x1150&_nc_cat=101&ccb=1-7&_nc_sid=aa7b47&_nc_eui2=AeFlle3HfrahRVW-hn3zE-GB6Z7BU111vJHpnsFTXXW8kQMOUx-rGjl64t6PIlCP0J8-d7xvVG9BZLIxKnEDvCor&_nc_ohc=kuVSh-XMYYcQ7kNvwEPyKko&_nc_oc=AdpMX1tMyGkO1uZzwaQLlRBEwFw8kpOntHGoM-Rct8NAh7NoqgIQ_Zh1fx47JLzEn5U&_nc_zt=23&_nc_ht=scontent-lax7-1.xx&_nc_gid=WZI7WQcursSoGfxYJU9fyA&_nc_ss=7b22e&oh=00_AQD3DxZn7AQiv3OlWpF1mQ4ocLsxyPRRPO7noPRegZhrIw&oe=6A4C50E1',
+    url: 'https://img.lightshot.app/ogxOQMqNTk2FBzY9gO_2sA.png',
     category: 'extracurricular',
     title: 'Du xuân quê hương Yên Định',
     description: 'Trên thùng xe công nông nơi đồng quê, thành viên lớp 11B8 nắm tay nhau hát vang những khúc ca tuổi trẻ dưới bầu trời đầy nắng và gió.',
